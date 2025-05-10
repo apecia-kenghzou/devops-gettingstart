@@ -1,0 +1,27 @@
+name: CI - Helm Chart Validation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  helm-chart-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Kubernetes and Helm
+      uses: azure/setup-kubernetes@v1
+      with:
+        kubernetes-version: '1.21.1'
+    
+    - name: Helm Lint
+      run: |
+        helm lint ./helm-chart
+
+    - name: Helm Test (Optional)
+      run: |
+        helm test grafana
