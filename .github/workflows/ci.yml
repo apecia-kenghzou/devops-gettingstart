@@ -1,4 +1,4 @@
-name: CI - Helm Chart Validation
+name: CI/CD - Deploy Helm Chart
 
 on:
   push:
@@ -6,22 +6,24 @@ on:
       - main
 
 jobs:
-  helm-chart-lint:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    - name: Set up Kubernetes and Helm
-      uses: azure/setup-kubernetes@v1
+    - name: Set up Helm
+      uses: azure/setup-helm@v3
       with:
-        kubernetes-version: '1.21.1'
-    
-    - name: Helm Lint
+        version: v3.13.2  # or latest version
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: v1.27.0  # match your cluster version
+
+    - name: Lint Helm chart
       run: |
         helm lint ./helm-chart
 
-    - name: Helm Test (Optional)
-      run: |
-        helm test grafana
