@@ -26,6 +26,62 @@ jobs:
     - name: Lint Helm chart
       run: |
         helm lint ./helm-chart
+        
+#    - name: Set up Vault
+#      run: |
+#        # Install Vault CLI
+#        sudo apt-get update
+#        sudo apt-get install -y wget unzip
+#        wget https://releases.hashicorp.com/vault/1.9.1/vault_1.9.1_linux_amd64.zip
+#        unzip vault_1.9.1_linux_amd64.zip
+#        sudo mv vault /usr/local/bin/
+
+#    - name: Authenticate with Vault
+#      run: |
+#        # Set Vault address (replace with your Vault address)
+#        export VAULT_ADDR="https://your-vault-address:8200"
+#        # Authenticate with Vault using the token stored in GitHub Secrets
+#        export VAULT_TOKEN="${{ secrets.VAULT_TOKEN }}"
+#        vault login $VAULT_TOKEN
+
+#    - name: Fetch secrets from Vault
+#      run: |
+#        # Fetch a specific secret from Vault (replace 'secret/data/my-app' with your secret path)
+#        SECRET=$(vault kv get -field=value secret/data/my-app)
+#        echo "Fetched secret: $SECRET"
+
+#    - name: Use secret in your application or deployment
+#      run: |
+#        # Here you can pass the fetched secrets into your application or Helm chart
+#        echo "Using secret in deployment"
+#        # Example: export the secret to environment variables or use it in the next steps
+#        export MY_SECRET=$SECRET
+        
+#    - name: Install Docker
+#      run: |
+#        sudo apt-get update
+#        sudo apt-get install -y docker.io
+
+#    - name: Log in to Harbor
+#      uses: docker/login-action@v2
+#      with:
+#        username: ${{ secrets.HARBOR_USERNAME }}
+#        password: ${{ secrets.HARBOR_PASSWORD }}
+#        registry: harbor.example.com  # Replace with your Harbor domain
+
+#    - name: Install Trivy
+#      run: |
+#        sudo apt-get update
+#        sudo apt-get install -y wget
+#        wget https://github.com/aquasecurity/trivy/releases/download/v0.33.0/trivy_0.33.0_Linux-x86_64.tar.gz
+#        tar zxvf trivy_0.33.0_Linux-x86_64.tar.gz
+#        sudo mv trivy /usr/local/bin/
+
+#    - name: Run Trivy scan
+#      run: |
+#        docker pull your-docker-image:latest
+#        trivy image --exit-code 1 --severity HIGH,CRITICAL your-docker-image:latest
+#      continue-on-error: false  # Fail the job if vulnerabilities are found
 
 #    - name: Configure kubeconfig
 #      run: |
