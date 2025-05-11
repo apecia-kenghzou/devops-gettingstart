@@ -162,3 +162,41 @@ via browser http://grafana.localdev.me:8080/login
 or 
 curl --resolve grafana.localdev.me:8080:127.0.0.1 http://grafana.localdev.me:8080
 ```
+
+
+
+### how do github deploy to ur server 
+
+you will need to have a github action
+
+github action will need to have connection to the kube cluster 
+
+You’ll store those kubeconfig (and any other) secrets in your Git host’s “secrets” storage—so they’re kept encrypted and only exposed to your workflows at runtime. Here’s how you do it on GitHub:
+```
+Go to your repository settings
+
+Open your repo on GitHub.
+
+Click Settings (the gear icon) in the top menu.
+
+Navigate to “Secrets and variables” → “Actions”
+
+In the left sidebar, find Secrets and variables, then select Actions.
+
+This is where any Action runner–accessible secrets for this repo live.
+
+Add a new repository secret
+
+Click New repository secret.
+
+Give it a name (for example, KUBE_DEV, KUBE_STAGING, or KUBE_PROD).
+
+Paste in the base64-encoded contents of your ~/.kube/config file (or whatever secret you need).
+
+Click Add secret.
+```
+(Optional) Per-environment secrets
+
+If you’ve set up GitHub’s Environments (e.g. “dev”, “staging”, “production”), you can also click Environments in repo settings, choose your environment, and add secrets there.
+
+Workflows that target that environment automatically get access to its secrets—and you can even require manual approvals or reviewers before they’re exposed.
